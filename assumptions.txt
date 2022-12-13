@@ -1,0 +1,3 @@
+- After a file is processed it moves from data to processed_data so as to not be processed again
+- I added an id with an autoincremental primary key to the tables for the ORM to work
+- I assume all the files are correctly made

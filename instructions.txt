@@ -1,0 +1,5 @@
+1. docker-compose build
+2. docker-compose run -d allbirds-db (This will run the db in the background)
+3. docker-compose run --rm app (Runs the app one time and removes the container)
+4. docker-compose down (Stops the db and removes the container)
+
