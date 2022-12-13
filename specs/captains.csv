@@ -1,0 +1,4 @@
+"column name",width,datatype
+country,10,TEXT
+captain,11,TEXT
+number_of_world_cups,1,INTEGER
