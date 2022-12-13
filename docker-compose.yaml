@@ -1,0 +1,32 @@
+version: '3'
+services:
+  allbirds-db:
+    image: postgres:13
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 30s
+      retries: 5
+      start_period: 5s
+  app:
+    build:
+      dockerfile: 'Dockerfile'
+      context: '.'
+    environment:
+      - DB_CONN_STRING=postgresql://${DB_USER}:${DB_PASSWORD}@allbirds-db:5432/${DB_NAME}
+    volumes:
+      - ./data:/opt/app/data
+      - ./processed_data:/opt/app/processed_data
+      - ./specs:/opt/app/specs
+    depends_on:
+      allbirds-db:
+        condition: service_healthy
